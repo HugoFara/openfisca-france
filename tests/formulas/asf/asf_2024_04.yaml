@@ -1,0 +1,34 @@
+# Allocation de soutien familial (ASF) - barème au 01/04/2024.
+#
+# Taux applicable à l'enfant privé de l'aide de l'un de ses parents : 42,2 % de la BMAF.
+#   Article R523-7 du Code de la sécurité sociale
+#   https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046498993
+# BMAF au 01/04/2024 : 466,44 euros
+#   Instruction interministérielle n° DSS/2B/2024/43 du 20/03/2024 (p. 84)
+#   https://sante.gouv.fr/fichiers/bo/2024/2024.6.sante.pdf#page=84
+#
+# Ce cas vérifie le montant brut de CRDS, seul montant publié pour cette date :
+# 196,84 euros, soit 42,2 % de 466,44 euros.
+#   https://www.securite-sociale.fr/home/medias/presse/list-presse/revalorisation-des-prestations-s.html
+
+- name: "ASF au 01/04/2024 - montant brut de CRDS d'un enfant à charge"
+  description: >-
+    Parent isolé avec un enfant à charge de 10 ans, sans pension alimentaire
+    perçue. Montant mensuel brut de 42,2 % de la BMAF, soit 196,84 euros.
+  period: 2024-04
+  absolute_error_margin: 0.01
+  input:
+    familles:
+      famille:
+        parents: [parent1]
+        enfants: [enfant1]
+    individus:
+      parent1:
+        age: 40
+      enfant1:
+        age: 10
+  output:
+    familles:
+      famille:
+        asf:
+          2024-04: 196.84

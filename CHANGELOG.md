@@ -1,5 +1,17 @@
 # Changelog
 
+### 176.0.9 [#XXXX](https://github.com/openfisca/openfisca-france/pull/XXXX)
+
+* Changement mineur
+* Périodes concernées : du 01/10/2022 au 30/11/2022, et à partir du 01/04/2024.
+* Zones impactées :
+  - `tests/formulas/asf`
+* Détails :
+  - Ajout de tests sur l'allocation de soutien familial (`asf`, `asf_nette_crds`)
+  - La revalorisation exceptionnelle du 01/11/2022, qui porte le taux de 28,13 % à 42,2 % de la BMAF (article R523-7 du Code de la sécurité sociale, modifié par le décret n° 2022-1370 du 27/10/2022), n'était couverte par aucun test : les montants d'octobre et de novembre 2022 sont désormais vérifiés de part et d'autre de cette date
+  - Ajout de la vérification du barème au 01/04/2024 et au 01/04/2026, du caractère différentiel de l'allocation lorsqu'une pension alimentaire est perçue (article L523-1) et du seuil de non-versement de 15 € (article D523-3)
+  - _Aucun changement de calcul : le montant de l'ASF n'était jusqu'ici vérifié qu'aux barèmes de 2015 et de 2018._
+
 ### 176.0.8 [#2792](https://github.com/openfisca/openfisca-france/pull/2792)
 
 * Changement mineur

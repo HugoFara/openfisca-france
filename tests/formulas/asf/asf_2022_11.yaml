@@ -1,0 +1,61 @@
+# Allocation de soutien familial (ASF) - revalorisation exceptionnelle du 01/11/2022.
+#
+# Le taux applicable à l'enfant privé de l'aide de l'un de ses parents passe de
+# 28,13 % à 42,2 % de la BMAF au 01/11/2022 (majoration de 50 %).
+#   Article R523-7 du Code de la sécurité sociale
+#   https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046498993
+#   Article 1 du Décret n° 2022-1370 du 27/10/2022
+#   https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000046497145
+# BMAF au 01/07/2022 : 439,17 euros, inchangée sur les deux mois testés.
+#   Article L551-1 du Code de la sécurité sociale, LOI n° 2022-1158 du 16/08/2022, art. 9
+#   https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000046186723
+#
+# Les montants attendus sont les montants nets de CRDS effectivement versés, tels
+# que publiés par la Cnaf : 122,93 euros en octobre 2022, 184,41 euros en novembre.
+#   https://www.caf.fr/allocataires/actualites/actualites-nationales/l-allocation-de-soutien-familial-augmente-de-50
+# La marge de 0,01 euro absorbe l'arrondi au centime pratiqué par la Cnaf.
+
+- name: "ASF octobre 2022 - taux de 28,13 % de la BMAF avant la revalorisation"
+  description: >-
+    Parent isolé avec un enfant à charge de 10 ans, sans pension alimentaire
+    perçue. Montant mensuel de 28,13 % de la BMAF, soit 122,93 euros nets de CRDS.
+  period: 2022-10
+  absolute_error_margin: 0.01
+  input:
+    familles:
+      famille:
+        parents: [parent1]
+        enfants: [enfant1]
+    individus:
+      parent1:
+        age: 40
+      enfant1:
+        age: 10
+  output:
+    familles:
+      famille:
+        asf_nette_crds:
+          2022-10: 122.93
+
+- name: "ASF novembre 2022 - taux porté à 42,2 % de la BMAF"
+  description: >-
+    Même situation le mois suivant. Le décret n° 2022-1370 du 27/10/2022 porte le
+    taux à 42,2 % de la BMAF à compter du 01/11/2022, soit 184,41 euros nets de
+    CRDS, sans que la BMAF ait changé entre les deux mois.
+  period: 2022-11
+  absolute_error_margin: 0.01
+  input:
+    familles:
+      famille:
+        parents: [parent1]
+        enfants: [enfant1]
+    individus:
+      parent1:
+        age: 40
+      enfant1:
+        age: 10
+  output:
+    familles:
+      famille:
+        asf_nette_crds:
+          2022-11: 184.41

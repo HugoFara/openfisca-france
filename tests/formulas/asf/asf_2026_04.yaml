@@ -1,0 +1,118 @@
+# Allocation de soutien familial (ASF) - barème au 01/04/2026.
+#
+# Taux applicable à l'enfant privé de l'aide de l'un de ses parents : 42,2 % de la BMAF.
+#   Article R523-7 du Code de la sécurité sociale
+#   https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046498993
+# BMAF au 01/04/2026 : 478,16 euros
+#   Instruction interministérielle n° DSS/2B/2026/46 du 20/03/2026
+#   https://bulletins-officiels.social.gouv.fr/instruction-interministerielle-ndeg-dss2b202646-du-20-mars-2026-relative-la-revalorisation-au-1er-avril-2026-des-prestations-familiales-servies-en-metropole-en-guadeloupe-en-guyane-en-martinique-la-reunion-saint-barthelemy-saint-martin-et
+# L'allocation est due par enfant à charge (art. R523-7 précité, qui fixe le taux
+# « pour l'enfant » mentionné à l'article L523-3).
+# Allocation différentielle lorsque la pension alimentaire perçue est inférieure
+# au montant de l'ASF : article L523-1 du Code de la sécurité sociale.
+#   https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044629511
+# Seuil de non-versement de 15 euros : article D523-3 du Code de la sécurité sociale.
+#   https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000037249831/2018-07-01/
+#
+# Montant net de CRDS publié pour un enfant : 200,78 euros.
+#   https://www.service-public.gouv.fr/particuliers/vosdroits/F815
+# La marge de 0,01 euro absorbe l'arrondi au centime pratiqué par la Cnaf ; elle
+# est portée à 0,02 euro sur le cas à deux enfants, où cet arrondi est doublé.
+
+- name: "ASF au 01/04/2026 - un enfant à charge"
+  description: >-
+    Parent isolé avec un enfant à charge de 10 ans, sans pension alimentaire
+    perçue. Montant mensuel de 42,2 % de la BMAF, soit 200,78 euros nets de CRDS.
+  period: 2026-04
+  absolute_error_margin: 0.01
+  input:
+    familles:
+      famille:
+        parents: [parent1]
+        enfants: [enfant1]
+    individus:
+      parent1:
+        age: 40
+      enfant1:
+        age: 10
+  output:
+    familles:
+      famille:
+        asf_nette_crds:
+          2026-04: 200.78
+
+- name: "ASF au 01/04/2026 - deux enfants à charge, allocation due par enfant"
+  description: >-
+    Même situation avec deux enfants à charge. L'ASF étant due pour chaque enfant,
+    le montant est doublé, soit 401,56 euros nets de CRDS.
+  period: 2026-04
+  absolute_error_margin: 0.02
+  input:
+    familles:
+      famille:
+        parents: [parent1]
+        enfants: [enfant1, enfant2]
+    individus:
+      parent1:
+        age: 40
+      enfant1:
+        age: 10
+      enfant2:
+        age: 14
+  output:
+    familles:
+      famille:
+        asf_nette_crds:
+          2026-04: 401.56
+
+- name: "ASF au 01/04/2026 - allocation différentielle, pension alimentaire de 100 euros"
+  description: >-
+    Le parent isolé perçoit une pension alimentaire de 100 euros, inférieure au
+    montant de l'ASF. L'allocation différentielle complète la pension à hauteur du
+    montant de l'ASF : 201,78 - 100, soit 101,78 euros bruts de CRDS.
+  period: 2026-04
+  absolute_error_margin: 0.01
+  input:
+    familles:
+      famille:
+        parents: [parent1]
+        enfants: [enfant1]
+    individus:
+      parent1:
+        age: 40
+        pensions_alimentaires_percues:
+          2026-04: 100
+      enfant1:
+        age: 10
+  output:
+    familles:
+      famille:
+        asf:
+          2026-04: 101.78
+
+- name: "ASF au 01/04/2026 - seuil de non-versement de 15 euros"
+  description: >-
+    Avec une pension alimentaire de 190 euros, l'allocation différentielle
+    s'établirait à 11,78 euros, soit moins que le seuil de versement de 15 euros
+    de l'article D523-3. Aucune allocation n'est versée.
+  period: 2026-04
+  absolute_error_margin: 0.01
+  input:
+    familles:
+      famille:
+        parents: [parent1]
+        enfants: [enfant1]
+    individus:
+      parent1:
+        age: 40
+        pensions_alimentaires_percues:
+          2026-04: 190
+      enfant1:
+        age: 10
+  output:
+    familles:
+      famille:
+        asf:
+          2026-04: 0
+        asf_nette_crds:
+          2026-04: 0
